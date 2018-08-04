@@ -12,6 +12,7 @@ const requestComplete = function(){
   populateList(jobs);
 };
 
+
 const populateList = function(jobs){
   let selectTag = document.getElementById('jobsDropdown');
   let = index = 0;
@@ -36,43 +37,52 @@ const populateList = function(jobs){
       node.removeChild(node.lastChild);
     }
   };
-  //
+
   const displayList = function(job){
-    console.log(job);
+    // console.log(job);
     let ulTag = document.getElementById('jobs-list');
+    let descTag= document.getElementById('jobs-desc');
+    let logoTag= document.getElementById('img');
+    let moreInfoTag= document.getElementById('a');
     clearContent(ulTag);
+    clearContent(descTag);
+    clearContent(logoTag);
+    clearContent(moreInfoTag);
+
     let titleJob = document.createElement('li');
     titleJob.innerText = `Position: ` + job.title;
     ulTag.appendChild(titleJob);
+
     let locationJob = document.createElement('li');
     locationJob.innerText = `Location: ` + job.location;
     ulTag.appendChild(locationJob);
+
     let dateJob = document.createElement('li');
     dateJob.innerText = 'Created at: ' + job.created_at;
     ulTag.appendChild(dateJob);
+
     let typeJob = document.createElement('li');
     typeJob.innerText = 'Type: ' + job.type;
     ulTag.appendChild(typeJob);
-    // let desJob = document.createElement('li');
-    // desJob.innerText = 'Description: ' + job.description;
-    // ulTag.appendChild(desJob);
-    // let urlJob = document.createElement('li');
-    // urlJob.innerText = 'How to apply: ' + job.how_to_apply;
-    // ulTag.appendChild(urlJob)
+
+    let desJob = document.createElement('jobs-desc');
+    desJob.innerHTML = job.description;
+    descTag.appendChild(desJob);
+
     let companyJob = document.createElement('li');
     companyJob.innerText = 'Company: ' + job.company;
     ulTag.appendChild(companyJob);
 
     let imgJob = document.createElement('img');
     imgJob.src = job.company_logo;
-    ulTag.appendChild(imgJob);
+    logoTag.appendChild(imgJob);
 
     let infoJob = document.createElement('a')
-    let linkText = document.createTextNode("More info: ");
+    let linkText = document.createTextNode("Click here for more info!");
     infoJob.appendChild(linkText);
     infoJob.title = "More info: ";
     infoJob.href = job.url;
-    ulTag.appendChild(infoJob);
+    moreInfoTag.appendChild(infoJob);
   }
 
 var app = function(){
@@ -84,11 +94,6 @@ var app = function(){
     const lng = event.latlng.lng;
     console.log([lat, lng]);
     const url = `https://jobs.github.com/positions.json?lat=${lat}&long=${lng}`;
-    var jsonString = localStorage.getItem('job');
-    if(jsonString !== null){
-      var savedJob = JSON.parse(jsonString);
-      displayList(savedJob);
-  };
       makeRequest(url, requestComplete);
   });
 }
