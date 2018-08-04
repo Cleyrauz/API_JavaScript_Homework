@@ -1,4 +1,5 @@
 const makeRequest = function(url, callback){
+
   const request = new XMLHttpRequest();
   request.open('GET', url);
   request.addEventListener('load', callback);
@@ -15,6 +16,7 @@ const requestComplete = function(){
 
 const populateList = function(jobs){
   let selectTag = document.getElementById('jobsDropdown');
+  clearContent(selectTag);
   let = index = 0;
   jobs.forEach((job) => {
     let option = document.createElement('option');
@@ -25,11 +27,15 @@ const populateList = function(jobs){
   });
 
   selectTag.addEventListener('change', function(){
-    var job = jobs[this.value];
+    console.log('Buscando data');
+    var job = null;
+    job = jobs[this.value];
     displayList(job);
     var jsonString = JSON.stringify(job);
     localStorage.setItem('job', jsonString);
+    console.log('Local Storage:'+localStorage);
   });
+
   };
 
   const clearContent = function(node){
@@ -39,7 +45,7 @@ const populateList = function(jobs){
   };
 
   const displayList = function(job){
-    // console.log(job);
+    console.log(job);
     let ulTag = document.getElementById('jobs-list');
     let descTag= document.getElementById('jobs-desc');
     let applyTag= document.getElementById('jobs-apply');
@@ -48,44 +54,63 @@ const populateList = function(jobs){
     clearContent(descTag);
     clearContent(logoTag);
     clearContent(applyTag);
-    //
-    // let titleJob = document.createElement('li');
-    // titleJob.innerText = `Position: ` + job.title;
-    // ulTag.appendChild(titleJob);
+
 
     let titleJob = document.createElement('li');
-    if (job !== undefined) {
-      titleJob.innerText = `Position: ` + job.title;
-    ulTag.appendChild(titleJob);
+    if (job === undefined) {
+      titleJob.innerText = 'This job has been removed.';
+      console.log('This job has been removed.');
+      ulTag.appendChild(titleJob);
+    } else {
+      if (job !== undefined) {
+        if(job.title !== null){
+          titleJob.innerText = 'Position: ' + job.title;
+          ulTag.appendChild(titleJob);
+        }
 
-    let locationJob = document.createElement('li');
-    locationJob.innerText = `Location: ` + job.location;
-    ulTag.appendChild(locationJob);
+        let locationJob = document.createElement('li');
+        if(job.location !== null){
+          locationJob.innerText = 'Location: ' + job.location;
+          ulTag.appendChild(locationJob);
+        }
 
-    let dateJob = document.createElement('li');
-    dateJob.innerText = 'Created at: ' + job.created_at;
-    ulTag.appendChild(dateJob);
+        let dateJob = document.createElement('li');
+        if(job.created_at !== null){
+          dateJob.innerText = 'Created at: ' + job.created_at;
+          ulTag.appendChild(dateJob);
+        }
 
-    let typeJob = document.createElement('li');
-    typeJob.innerText = 'Type: ' + job.type;
-    ulTag.appendChild(typeJob);
+        let typeJob = document.createElement('li');
+        if(job.type !== null){
+          typeJob.innerText = 'Type: ' + job.type;
+          ulTag.appendChild(typeJob);
+        }
 
-    let desJob = document.createElement('jobs-desc');
-    desJob.innerHTML = job.description;
-    descTag.appendChild(desJob);
+        let desJob = document.createElement('jobs-desc');
+        if(job.description !== null){
+          desJob.innerHTML = job.description;
+          descTag.appendChild(desJob);
+        }
 
-    let applyJob = document.createElement('jobs-apply');
-    applyJob.innerHTML = job.how_to_apply;
-    applyTag.appendChild(applyJob);
+        let applyJob = document.createElement('jobs-apply');
+        if(job.how_to_apply !== null){
+          applyJob.innerHTML = job.how_to_apply;
+          applyTag.appendChild(applyJob);
+        }
 
-    let companyJob = document.createElement('li');
-    companyJob.innerText = 'Company: ' + job.company;
-    ulTag.appendChild(companyJob);
+        let companyJob = document.createElement('li');
+        if(job.company !== null){
+          companyJob.innerText = 'Company: ' + job.company;
+          ulTag.appendChild(companyJob);
+        }
 
-    let imgJob = document.createElement('img');
-    imgJob.src = job.company_logo;
-    logoTag.appendChild(imgJob);
-  }
+        let imgJob = document.createElement('img');
+        if(job.company_logo !== null){
+          imgJob.src = job.company_logo;
+          logoTag.appendChild(imgJob);
+        }
+      }
+    }
 };
 
 var app = function(){
@@ -93,11 +118,14 @@ var app = function(){
   const mapWrapper = new MapWrapper('map', 37.774929, -122.419416, 10);
 
   mapWrapper.map.on('click', function(event){
+    console.log('Hice un click');
+
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
     console.log([lat, lng]);
     const url = `https://jobs.github.com/positions.json?lat=${lat}&long=${lng}`;
       makeRequest(url, requestComplete);
+
   });
 }
 
