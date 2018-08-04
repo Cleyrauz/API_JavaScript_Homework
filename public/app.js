@@ -27,13 +27,11 @@ const populateList = function(jobs){
   });
 
   selectTag.addEventListener('change', function(){
-    console.log('Buscando data');
     var job = null;
     job = jobs[this.value];
     displayList(job);
     var jsonString = JSON.stringify(job);
     localStorage.setItem('job', jsonString);
-    console.log('Local Storage:'+localStorage);
   });
 
   };
@@ -59,7 +57,6 @@ const populateList = function(jobs){
     let titleJob = document.createElement('li');
     if (job === undefined) {
       titleJob.innerText = 'This job has been removed.';
-      console.log('This job has been removed.');
       ulTag.appendChild(titleJob);
     } else {
       if (job !== undefined) {
@@ -118,11 +115,9 @@ var app = function(){
   const mapWrapper = new MapWrapper('map', 37.774929, -122.419416, 10);
 
   mapWrapper.map.on('click', function(event){
-    console.log('Hice un click');
 
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
-    console.log([lat, lng]);
     const url = `https://jobs.github.com/positions.json?lat=${lat}&long=${lng}`;
       makeRequest(url, requestComplete);
 
