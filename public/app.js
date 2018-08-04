@@ -42,15 +42,20 @@ const populateList = function(jobs){
     // console.log(job);
     let ulTag = document.getElementById('jobs-list');
     let descTag= document.getElementById('jobs-desc');
+    let applyTag= document.getElementById('jobs-apply');
     let logoTag= document.getElementById('img');
-    let moreInfoTag= document.getElementById('a');
     clearContent(ulTag);
     clearContent(descTag);
     clearContent(logoTag);
-    clearContent(moreInfoTag);
+    clearContent(applyTag);
+    //
+    // let titleJob = document.createElement('li');
+    // titleJob.innerText = `Position: ` + job.title;
+    // ulTag.appendChild(titleJob);
 
     let titleJob = document.createElement('li');
-    titleJob.innerText = `Position: ` + job.title;
+    if (job !== undefined) {
+      titleJob.innerText = `Position: ` + job.title;
     ulTag.appendChild(titleJob);
 
     let locationJob = document.createElement('li');
@@ -69,6 +74,10 @@ const populateList = function(jobs){
     desJob.innerHTML = job.description;
     descTag.appendChild(desJob);
 
+    let applyJob = document.createElement('jobs-apply');
+    applyJob.innerHTML = job.how_to_apply;
+    applyTag.appendChild(applyJob);
+
     let companyJob = document.createElement('li');
     companyJob.innerText = 'Company: ' + job.company;
     ulTag.appendChild(companyJob);
@@ -76,14 +85,8 @@ const populateList = function(jobs){
     let imgJob = document.createElement('img');
     imgJob.src = job.company_logo;
     logoTag.appendChild(imgJob);
-
-    let infoJob = document.createElement('a')
-    let linkText = document.createTextNode("Click here for more info!");
-    infoJob.appendChild(linkText);
-    infoJob.title = "More info: ";
-    infoJob.href = job.url;
-    moreInfoTag.appendChild(infoJob);
   }
+};
 
 var app = function(){
   google.charts.load('current', {packages: ['corechart']});
