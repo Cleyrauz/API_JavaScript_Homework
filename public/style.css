@@ -69,8 +69,9 @@ body {
 img {
   padding-top: 20px;
   padding-left: 10px;
-  width: 100px;
-  height: 100px;
+  max-height:180px;
+    width: auto;
+    height: auto;
 }
 
 #info-wrapper {
