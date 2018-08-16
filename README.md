@@ -4,9 +4,10 @@
 Learning objectives:
 practice adding event listeners to items in the DOM
 practice using the Leaflet maps library
+practice doing request to a API
 use documentation and online research to add features to your map
 
-Live jobs data taken from the Git API.
+Live jobs data taken from the GitHub Jobs API.
 
 ## Tasks:
 
