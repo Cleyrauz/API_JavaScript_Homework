@@ -10,7 +10,10 @@ Live jobs data taken from the Git API.
 
 ## Tasks:
 
-Display a map on the screen.
-Click on map to generate a scroll down menu with all the tech jobs in the selected latitud and longitud.
-Add conditional logic to validate data bedore displaying.
-Display all the information about a selected job.
+-Display a map on the screen.
+
+-Click on map to generate a scroll down menu with all the tech jobs in the selected latitud and longitud.
+
+-Add conditional logic to validate data bedore displaying.
+
+-Display all the information about a selected job.
